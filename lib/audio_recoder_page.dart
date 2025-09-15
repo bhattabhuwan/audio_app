@@ -34,6 +34,17 @@ class _AudioRecorderPageState extends State<AudioRecorderPage> {
   void initState() {
     super.initState();
     _loadRecordings();
+
+    // Hide progress bar when playback finishes
+    _player.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.completed) {
+        setState(() {
+          _playbackPosition = Duration.zero;
+          _playbackDuration = Duration.zero;
+          _filePath = null;
+        });
+      }
+    });
   }
 
   Future<void> _loadRecordings() async {
@@ -115,12 +126,26 @@ class _AudioRecorderPageState extends State<AudioRecorderPage> {
 
   /// Delete single recording
   Future<void> _deleteRecording(FileSystemEntity file) async {
+    if (_filePath == file.path) {
+      await _player.stop();
+      setState(() {
+        _playbackPosition = Duration.zero;
+        _playbackDuration = Duration.zero;
+        _filePath = null;
+      });
+    }
     await file.delete();
     _loadRecordings();
   }
 
   /// Delete all recordings
   Future<void> _deleteAllRecordings() async {
+    await _player.stop();
+    setState(() {
+      _playbackPosition = Duration.zero;
+      _playbackDuration = Duration.zero;
+      _filePath = null;
+    });
     for (var file in _recordings) {
       await file.delete();
     }
