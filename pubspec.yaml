@@ -38,6 +38,9 @@ dependencies:
   just_audio: ^0.10.5
   path_provider: ^2.1.5
   path: ^1.9.1
+  googleapis: ^14.0.0
+  googleapis_auth: ^2.0.0
+  http: ^1.5.0
 
 dev_dependencies:
   flutter_test:
@@ -62,8 +65,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+  - lib/assest/audioapp-472207-0d1343eedc51
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

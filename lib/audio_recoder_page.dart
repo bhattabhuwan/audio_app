@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:audio_app/upload_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
@@ -95,6 +96,10 @@ class _AudioRecorderPageState extends State<AudioRecorderPage> {
       _isRecording = false;
     });
     _loadRecordings();
+
+      if (_filePath != null) {
+    await uploadFileToBackend(_filePath!); // Auto-upload
+  }
   }
 
   /// Play a recording
